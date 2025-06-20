@@ -2,7 +2,7 @@ body {
 margin: 0;
 font-family: Arial, sans-serif;
 background-color: #000000; /* Fond noir */
-color: #00FF00; /* Texte vert fluo */
+color: #00FF00; /* Texte vert */
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -11,20 +11,24 @@ padding: 20px;
 
 h1 {
 color: #00FF00;
-font-size: 2.2em;
+font-size: 2.5em;
 margin-bottom: 30px;
 }
 
-.menu-item {
-background-color: #FFFFFF; /* Bloc blanc */
-color: #008000; /* Texte vert doux dans les blocs */
+.menu {
+width: 100%;
+max-width: 600px;
+}
+
+.item {
+background-color: #FFFFFF;
+color: #008000;
 border-radius: 12px;
 padding: 20px;
-margin: 10px;
-width: 90%;
-max-width: 400px;
-text-align: center;
-font-size: 1.5em;
+margin: 10px 0;
+font-size: 1.6em;
 font-weight: bold;
+text-align: center;
 box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+cursor: pointer;
 }
