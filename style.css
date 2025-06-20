@@ -2,7 +2,7 @@ body {
 margin: 0;
 font-family: Arial, sans-serif;
 background-color: #000000; /* Fond noir */
-color: #00FF00; /* Texte vert */
+color: #00FF66; /* Texte principal */
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -10,9 +10,10 @@ padding: 20px;
 }
 
 h1 {
-color: #00FF00;
+color: #00FF66;
 font-size: 2.5em;
 margin-bottom: 30px;
+text-align: center;
 }
 
 .menu {
@@ -21,14 +22,39 @@ max-width: 600px;
 }
 
 .item {
-background-color: #FFFFFF;
-color: #008000;
+background-color: #ffffff; /* Bloc blanc */
+color: #008000; /* Texte vert foncé dans le bloc */
 border-radius: 12px;
 padding: 20px;
 margin: 10px 0;
-font-size: 1.6em;
+font-size: 1.4em;
 font-weight: bold;
 text-align: center;
-box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
 cursor: pointer;
+box-shadow: 0 0 12px rgba(0, 255, 102, 0.3);
+transition: transform 0.2s ease;
+}
+
+.item:hover {
+transform: scale(1.03);
+}
+
+.popup {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.9);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 10;
+display: none;
+}
+
+.popup img {
+max-width: 90%;
+max-height: 90%;
+border-radius: 10px;
 }
