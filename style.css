@@ -18,16 +18,17 @@ padding: 40px;
 
 .item {
 padding: 15px;
-background-color: #0c6136;
+background-color: #f39c12;
 border-radius: 10px;
 cursor: pointer;
 transition: background 0.3s;
 font-size: 48px;
 font-weight: bold;
+color: #0c6136;
 }
 
 .item:hover {
-background-color: #f39c12;
+background-color: #cb4126;
 }
 
 .popup {
