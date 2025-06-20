@@ -7,6 +7,7 @@ background-color: #fff8f0;
 h1 {
 color: #e74c3c;
 margin-top: 30px;
+  front-size: 38px;
 }
 
 .menu {
@@ -22,7 +23,7 @@ background-color: #f8b400;
 border-radius: 10px;
 cursor: pointer;
 transition: background 0.3s;
-font-size: 18px;
+font-size: 26px;
 font-weight: bold;
 }
 
