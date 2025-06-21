@@ -49,16 +49,16 @@ border-radius: 12px;
 
 .categorie {
 font-weight: bold;
-font-size: 48px;
-color: gray; /* Couleur intérieure du texte */
+font-size: 52px;
+color: gray;
 text-align: center;
 margin-top: 20px;
 cursor: pointer;
 
-/* Effet de contour autour du texte */
+
 text-shadow:
--1px -1px 0 black,
-1px -1px 0 black,
--1px 1px 0 black,
+1px 1px 0 black,
+1px 1px 0 black,
+1px 1px 0 black,
 1px 1px 0 black;
 }
