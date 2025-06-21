@@ -5,9 +5,10 @@ background-color: #fff8f0;
 }
 
 h1 {
+font-family: 'Times New Roman', Times, serif;
 color: #e74c3c;
 margin-top: 30px;
-  font-size: 68px;
+font-size: 68px;
 }
 
 .menu {
