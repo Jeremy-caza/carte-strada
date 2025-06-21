@@ -20,7 +20,7 @@ padding: 40px;
 
 .item {
 padding: 15px;
-background-color: #f39c12;
+background-color: #fbc02d;
 border-radius: 10px;
 cursor: pointer;
 transition: background 0.3s;
@@ -51,11 +51,17 @@ border-radius: 12px;
 .categorie {
 font-family: 'montserrat', sans-serif;
 font-weight: 900;
-font-size: 52px;
-color: rgb(100, 99, 99);
+font-size: 48px;
+color: rgb(53, 53, 53);
+background-color: #f9a825;
+border: 2px solid #f9a825;
+border-radius: 10px;
+padding: 15px;
+margin: 35px auto;
+width: 90%;
 text-align: center;
-margin-top: 20px;
 cursor: pointer;
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .liste {
@@ -72,7 +78,7 @@ max-height: 1000px;
 button {
 display: block;
 width: 90%;
-margin: 20px auto;
+margin: 40px auto;
 background-color: orange;
 color: #333;
 font-weight: bold;
