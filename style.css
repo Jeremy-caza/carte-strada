@@ -19,14 +19,15 @@ padding: 40px;
 }
 
 .item {
+font-family: 'Times New Roman', Times, serif;
 padding: 15px;
-background-color: #fbc02d;
+background-color: #69bc76;
 border-radius: 10px;
 cursor: pointer;
 transition: background 0.3s;
 font-size: 42px;
 font-weight: bold;
-color: #000000;
+color: #ffffff;
 margin-bottom: 12px;
 }
 
@@ -49,7 +50,7 @@ border-radius: 12px;
 }
 
 .categorie {
-font-family: 'montserrat', sans-serif;
+font-family: 'roboto', serif;
 font-weight: 900;
 font-size: 48px;
 color: rgb(53, 53, 53);
@@ -79,12 +80,12 @@ button {
 display: block;
 width: 90%;
 margin: 40px auto;
-background-color: orange;
-color: #333;
+background-color: #f9d59b;
+color: #000;
 font-weight: bold;
 padding: 15px;
 border-radius: 8px;
-border: 2px solid orange;
+border: 2px solid #f9d59b;
 cursor: pointer;
 font-size: 18px;
 text-align: center;
@@ -93,7 +94,7 @@ box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
 .ingredients {
 font-size: 16px;
-color: #333;
+color: #000;
 margin-top: 6px;
 font-weight: normal;
 text-align: center;
