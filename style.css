@@ -54,8 +54,8 @@ font-family: 'roboto', serif;
 font-weight: 900;
 font-size: 48px;
 color: rgb(53, 53, 53);
-background-color: #f9a825;
-border: 2px solid #f9a825;
+background-color: #f9d59b;
+border: 2px solid #f9d59b;
 border-radius: 10px;
 padding: 15px;
 margin: 35px auto;
@@ -73,19 +73,19 @@ margin-bottom: 20px;
 }
 
 .liste.open {
-max-height: 1000px;
+max-height: unset;
 }
 
 button {
 display: block;
 width: 90%;
 margin: 40px auto;
-background-color: #f9d59b;
+background-color: #9bb1f9;
 color: #000;
 font-weight: bold;
 padding: 15px;
 border-radius: 8px;
-border: 2px solid #f9d59b;
+border: 2px solid #9bb1f9;
 cursor: pointer;
 font-size: 18px;
 text-align: center;
