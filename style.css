@@ -88,3 +88,10 @@ margin-top: 6px;
 font-weight: normal;
 text-align: center;
 }
+
+.logo {
+display: block;
+margin: 10px auto 30px auto;
+width: 60px; 
+height: auto;
+}
