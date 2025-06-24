@@ -95,3 +95,9 @@ margin: 10px auto 5px auto;
 width: 120px; 
 height: auto;
 }
+
+.separator {
+    height: 6px;
+    background-color: #f9d59b;
+    width: 100%;
+}
