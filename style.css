@@ -1,7 +1,7 @@
 body {
 font-family: Arial, sans-serif;
 text-align: center;
-background-color: ##fdf6ef;
+background-color: #fdf6ef;
 margin: 0;
 padding: 0;
 }
@@ -9,7 +9,7 @@ padding: 0;
 h1 {
 font-family: 'Times New Roman', Times, serif;
 color: #e74c3c;
-margin-top: 30px;
+margin-top: 0px;
 font-size: 78px;
 text-align: center;
 }
@@ -91,7 +91,7 @@ text-align: center;
 
 .logo {
 display: block;
-margin: 10px auto 30px auto;
-width: 180px; 
+margin: 10px auto 5px auto;
+width: 120px; 
 height: auto;
 }
