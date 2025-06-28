@@ -83,7 +83,7 @@ max-height: unset;
 
 .ingredients {
 font-size: 16px;
-color: #fff;
+color: #f6fa1d;
 margin-top: 6px;
 font-weight: normal;
 text-align: center;
@@ -97,7 +97,8 @@ height: auto;
 }
 
 .separator {
-    height: 6px;
-    background-color: #f9d59b;
+    display: block;
+    height: 12px;
+    background-color: #fd0400;
     width: 100%;
 }
