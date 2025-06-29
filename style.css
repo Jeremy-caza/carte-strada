@@ -95,3 +95,15 @@ margin: 10px auto 5px auto;
 width: 200px; 
 height: auto;
 }
+
+.item-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.arrow {
+font-size: 1.2em;
+margin-left: 10px;
+transition: transform 0.3s ease;
+}
