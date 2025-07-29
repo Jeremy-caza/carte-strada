@@ -18,7 +18,7 @@ text-align: center;
 .menu {
 display: flex;
 flex-direction: column;
-gap: 20px;
+gap: 15px;
 padding: 20px;
 }
 
@@ -68,7 +68,7 @@ background-color: #f9d59b;
 border: 2px solid #f9d59b;
 border-radius: 10px;
 padding: 12px;
-margin: 15px auto;
+margin: 8px auto;
 width: 75%;
 max-width: 500px;
 text-align: center;
