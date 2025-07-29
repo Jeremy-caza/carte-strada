@@ -9,29 +9,30 @@ padding: 0;
 h1 {
 font-family: 'Times New Roman', Times, serif;
 color: #e74c3c;
-margin-top: 0px;
-font-size: 78px;
+margin-top: 20px;
+font-size: 38px;
 text-align: center;
+  margin-bottom: 10px;
 }
 
 .menu {
 display: flex;
 flex-direction: column;
 gap: 20px;
-padding: 40px;
+padding: 20px;
 }
 
 .item {
 font-family: 'Times New Roman', Times, serif;
-padding: 15px;
+padding: 10px;
 background-color: #478050;
 border-radius: 10px;
 cursor: pointer;
 transition: background 0.3s;
-font-size: 42px;
+font-size: 20px;
 font-weight: bold;
 color: #ffffff;
-margin-bottom: 12px;
+margin-bottom: 10px;
 text-align: center;
 cursor: pointer;
 }
@@ -57,13 +58,13 @@ border-radius: 12px;
 .categorie {
 font-family: 'roboto', serif;
 font-weight: 900;
-font-size: 48px;
+font-size: 24px;
 color: rgb(53, 53, 53);
 background-color: #f9d59b;
 border: 2px solid #f9d59b;
 border-radius: 10px;
-padding: 15px;
-margin: 35px auto;
+padding: 12px;
+margin: 25px auto;
 width: 90%;
 text-align: center;
 cursor: pointer;
@@ -82,9 +83,9 @@ max-height: unset;
 }
 
 .ingredients {
-font-size: 16px;
+font-size: 14px;
 color: #f6fa1d;
-margin-top: 6px;
+margin-top: 4px;
 font-weight: normal;
 text-align: center;
 }
@@ -92,7 +93,7 @@ text-align: center;
 .logo {
 display: block;
 margin: 10px auto 5px auto;
-width: 200px; 
+width: 150px; 
 height: auto;
 }
 
