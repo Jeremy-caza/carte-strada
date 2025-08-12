@@ -1,197 +1,537 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#d22d2d">
-<title>Carte Strada</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strada Pizza Truck</title>
+  <!-- POLICES (modifiables) -->
+  <!-- Pour changer : remplacez les familles ci-dessous ou ajoutez-en -->
+ <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* === COULEURS (modifiez ici) === */
+      --bg: #FDF1B8;            /* fond général beige */
+      --paper: #faf7f0;         /* panneaux/menus blanc */
+      --ink: #16B84E;           /* vert menthe texte */
+      --muted: #6b7a86;         /* texte secondaire */
+      --accent: #FF332A;        /* corail principal */
+      --accent-2: #c8504a;      /* corail foncé */
+      --border: #7F7C77;        /* filets test*/
+      --white: #ffffff;
+
+      /* === TYPO (modifiez ici) === */
+      --ff-head: "Pacifico", cursive;
+      --ff-body: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+
+      /* === DIMENSIONS === */
+      --maxw: 1200px;
+      --radius-xl: 28px;
+      --radius: 16px;
+      --shadow-1: 0 6px 18px rgba(14, 53, 85, .06);
+      --shadow-2: 0 14px 36px rgba(14, 53, 85, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--ink); background: var(--bg);
+      font-family: var(--ff-body); line-height: 1.6; font-size: 16px;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .container { max-width: var(--maxw); margin-inline: auto; padding-inline: 20px; }
+
+    /* ====== Header ====== */
+    header {
+      position: sticky; top: 12px; z-index: 50;
+    }
+    .nav-wrap {
+      background: var(--paper); border-radius: 999px; box-shadow: var(--shadow-1);
+      padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;
+      position: relative;
+    }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px; }
+    .brand img { width: 140px; height:auto; }
+
+    nav { display:flex; align-items:center; gap:28px; font-weight:600; }
+    nav a { opacity:.9; }
+    nav a:hover, nav a.active { opacity:1; color: var(--accent-2); }
+
+    .cta-platforms { display:flex; align-items:center; gap:12px; }
+    .cta-platforms .pill { background: var(--accent); color: var(--white); font-weight:800; padding:8px 12px; border-radius: 16px; filter: drop-shadow(0 6px 10px rgba(232,107,102,.25)); }
+
+    /* Burger mobile */
+    .burger { display:none; width:42px; height:42px; border-radius: 10px; border:1px solid var(--border); background: var(--white); align-items:center; justify-content:center; }
+    .burger span { width:22px; height:2px; background:var(--ink); position:relative; display:block; }
+    .burger span::before, .burger span::after { content:""; position:absolute; left:0; right:0; height:2px; background:var(--ink); }
+    .burger span::before { top:-7px; } .burger span::after { top:7px; }
+
+    .mobile-menu { display:none; position: absolute; left:0; right:0; top:62px; background:var(--paper); border-radius: 20px; box-shadow: var(--shadow-2); padding:16px; }
+    .mobile-menu a { display:block; padding:12px 8px; font-weight:600; border-radius:10px; }
+    .mobile-menu a:active { background:#00000008; }
+
+    /* ====== Mobile tweaks ====== */
+    @media (max-width: 900px) {
+      html, body { overflow-x: hidden; }
+      .container { padding-inline: 14px; }
+      .nav-wrap { padding: 8px 12px; }
+      .desktop-nav { display: none; }
+      .burger { display: inline-grid; }
+      .brand img { width: 120px; }
+      .brand span { display: none; } /* évite le chevauchement du libellé avec la nav */
+      .mobile-menu { top: 56px; }
+    }
+
+    /* Offset d’ancrage pour la barre sticky */
+    #top, #apropos, #menu, #contact { scroll-margin-top: 90px; }
+
+    /* ====== Hero ====== */
+    .hero { padding: 100px 0 40px; position: relative; overflow: hidden; }
+    
+    /* ===== Section backgrounds (full-bleed) ===== */
+    .bg-bleed { position: relative; }
+    .bg-bleed::before {
+      content:""; position:absolute; z-index:-1;
+      left:50%; top:0; width:100vw; height:100%;
+      transform:translateX(-50%);
+      background: var(--bg-img) center/cover no-repeat;
+      opacity: var(--bg-opacity, .18);
+      filter: var(--bg-filter, none);
+    }
+
+    .display {
+      font-family: var(--ff-head); font-weight:900; line-height: .95; letter-spacing:.3px;
+      font-size: clamp(48px, 8vw, 112px); text-transform: uppercase;
+      color: var(--accent); position: relative;
+      text-shadow: 0.10em 0.10em 0 var(--ink); /* effet ombre portée épaisse */
+    }
+    .subtitle { font-size: clamp(22px, 3vw, 44px); color: var(--ink); opacity:.9; margin-top: 18px; }
+
+    .hero-cta { margin-top: 28px; display:flex; gap:14px; flex-wrap: wrap; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 22px; font-weight:800; border-radius: 14px; cursor:pointer;
+      transition:.2s transform ease, .2s box-shadow ease; border:2px solid transparent;
+    }
+    .btn-primary { background: var(--ink); color: var(--white); box-shadow: var(--shadow-2); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+
+    /* ====== Texte intro ====== */
+    .intro { padding: 30px 0 10px; }
+    .intro .card { background: var(--paper); padding: 30px; border-radius: var(--radius-xl); box-shadow: var(--shadow-1); }
+    .intro p { margin:0 0 12px; color:#223f5a; font-size: clamp(16px, 2vw, 18px); }
+
+    /* ====== Tabs Menu ====== */
+    .tabs { margin-top: 40px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:auto; }
+    .tablist { display:flex; gap:28px; padding:22px 6px; min-width: max-content; }
+    .tablist button {
+      appearance:none; background:#0000; border:0; font-weight:800; font-family: var(--ff-head); font-size: clamp(16px, 2.4vw, 22px);
+      color: var(--ink); padding:12px 18px; border-radius: 12px; cursor:pointer; opacity:.85;
+    }
+    .tablist button[aria-selected="true"] { background: var(--accent); color: var(--white); box-shadow: 0 8px 18px rgba(232,107,102,.25); opacity:1; }
+
+    /* ====== Liste pizzas ====== */
+    .menu-section { padding: 18px 0 10px; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 28px; }
+    @media (min-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+    .item { padding: 18px 0; border-bottom:1px dashed #d9d5cc; }
+    .item h4 { margin:0 0 6px; font-family: var(--ff-head); font-weight:800; letter-spacing:.2px; }
+    .item .price { font-weight:800; color: var(--accent-2); float:right; margin-left: 10px; }
+    .item p { margin:0; color: var(--muted); }
+
+    /* CTA entre sections */
+    .block-cta { display:flex; justify-content:center; padding: 36px 0 20px; }
+
+    /* ====== Contact ====== */
+    #contact { padding: 70px 0; }
+    .contact-wrap { display:grid; gap: 30px; grid-template-columns: 1fr; }
+    @media (min-width: 980px) { .contact-wrap { grid-template-columns: 1.1fr .9fr; align-items: start; } }
+
+    .form-card, .story-card { background: var(--paper); border-radius: var(--radius-xl); padding: 26px; box-shadow: var(--shadow-1); }
+    .form-row { display:grid; grid-template-columns: 1fr; gap:12px; }
+    @media (min-width: 640px) { .form-row.two { grid-template-columns: 1fr 1fr; } }
+    label { font-weight:600; font-size: 14px; }
+    input, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border:1px solid var(--border); outline:none; background: #fff; font-family: var(--ff-body); }
+    textarea { min-height: 140px; resize: vertical; }
+
+    .policy { font-size: 14px; color: var(--muted); display:flex; gap:10px; align-items: flex-start; }
+
+    /* ====== Footer ====== */
+    footer { padding: 48px 0 110px; color: var(--ink); }
+.footer-head { text-align:center; margin-bottom: 20px; }
+.footer-head .logo { height: 44px; }
+.footer-head .slogan { font-family: var(--ff-head); letter-spacing: 3px; font-weight:600; color: var(--muted); text-transform: uppercase; }
+.footer-top { display:grid; grid-template-columns: 1fr; gap: 28px; justify-items:center; text-align:center; padding: 14px 0 22px; }
+@media (min-width: 900px){ .footer-top { grid-template-columns: 1fr 1fr 1fr; } }
+.footer-top .info { display:flex; flex-direction:column; align-items:center; gap: 10px; }
+.footer-top .ico { font-size: 30px; line-height: 1; background: var(--paper); width: 56px; height:56px; border-radius: 999px; display:grid; place-items:center; box-shadow: var(--shadow-1); color: var(--ink); }
+.footer-top .label { font-weight:800; letter-spacing: .5px; }
+.foot-sep { border: 0; border-top:1px solid var(--border); margin: 26px 0; }
+.footer-bottom { display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap:wrap; color: var(--muted); font-size:14px; }
+.socials { display:flex; align-items:center; gap: 12px; }
+.socials a { width: 38px; height: 38px; border-radius: 999px; display:grid; place-items:center; background: var(--ink); color:#fff; font-weight: 900; text-decoration:none; }
+.socials a:hover { transform: translateY(-1px); }
+
+    /* ====== Bouton téléphone flottant (UberEats supprimé volontairement) ====== */
+    .fab-call {
+      position: fixed; right: calc(18px + env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 60;
+      width: 60px; height: 60px; border-radius: 999px; display:grid; place-items:center;
+      background: var(--accent); color:#fff; box-shadow: 0 14px 28px rgba(232,107,102,.35);
+      font-weight: 900; font-size: 22px; line-height: 1; text-decoration: none;
+    }
+    .fab-call:hover { transform: translateY(-2px); }
+
+    /* ====== Utilitaires ====== */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  </style>
 </head>
 <body>
+  <!-- =================== HEADER =================== -->
+  <header class="container">
+    <div class="nav-wrap">
+      <a class="brand" href="#top" aria-label="Accueil">
+        <!-- Remplacez src par votre logo -->
+        <img src="images/logo.png" alt="Logo Pizzeria" onerror="this.style.display='none'">
+        <span>PIZZERIA ARTISANALE TRUCK</span>
+      </a>
 
-<div class="header">
-    <img src="images/logo.png" alt="Logo Carte Strada" class="logo">
-    <h1>Carte Strada Truck</h1>
-</div>
+      <nav class="desktop-nav">
+        <a href="#top" class="active">Accueil</a>
+        <a href="#apropos">A propos</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-<div class="menu">
+      <!-- Bouton burger pour mobile -->
+      <button class="burger" id="burger" aria-label="Ouvrir le menu"><span></span></button>
 
-<div class="categorie" onclick="toggleList('classiques')">Les Classiques</div>
-<div class="liste" id="classiques">
-<div class="item" onclick="showImage('images/margherita.jpg')">
-Margherita
-<p class="ingredients">Tomate, mozzarella, olives noires, origan: 9€</p>
-</div>
+      <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu">
+        <a href="#top">Accueil</a>
+        <a href="#apropos">A propos</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+      </div>
 
-<div class="item" onclick="showImage('images/esposito.jpg')">
-Esposito
-<p class="ingredients">Tomate, mozzarella di Buffala, huile d'olive au basilic, olives noires, origan: 11€</p>
-</div>
+      <!-- Bouton UberEats supprimé selon votre demande -->
+      <!-- <div class="cta-platforms"><span class="pill">UberEats</span></div> -->
+    </div>
+  </header>
 
-<div class="item" onclick="showImage('images/romaine.jpg')">
-Romaine
-<p class="ingredients">Tomate, jambon blanc au torchon, mozzarella, olives noires, origan: 10€</p>
-</div>
+  <!-- =================== HERO =================== -->
+  <section class="hero container bg-bleed" id="top" style="--bg-img: url('images/camion.jpg'); --bg-opacity:.22;">
+    <h1 class="display">STRADA<br/>PIZZA-TRUCK</h1>
+    <p class="subtitle">Le camion jaune !</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#menu">Voir le menu</a>
+      <a class="btn btn-ghost" id="btnCommanderTop" href="#contact">Commander</a>
+    </div>
+  </section>
 
-<div class="item" onclick="showImage('images/reine.jpg')">
-Reine
-<p class="ingredients">Tomate, jambon blanc, champignons frais, mozzarella, olives noires, origan: 11€</p>
-</div>
+  <!-- =================== INTRO TEXTE =================== -->
+  <section class="intro container" id="apropos">
+    <div class="card">
+      <h2 style="font-family:var(--ff-head); font-weight:800; letter-spacing:.3px;">Une pizza chez STRADA ?</h2>
+      <p>Le goût du fait maison depuis 2016. Depuis plus de 9 ans, dans les villages des Pyrénées avec notre camion jaune pour partager notre passion : la pizza artisanale. Chaque soir, plus de 30 recettes originales et classiques prennent vie, préparées avec des ingrédients soigneusement sélectionnés, frais du jour pour le jour même. La pâte est pétrie quotidiennement, la sauce tomate mijotée maison, et chaque pizza est garnie avec générosité. Derrière chaque cuisson, il y a un savoir-faire, une exigence et une passion qui se ressentent à chaque bouchée. Les clients en parlent mieux que nous : saveurs authentiques, croûte légère et croustillante, garnitures généreuses… Strada Pizza Truck, c’est un rendez-vous gourmand !</p>
+      <div class="block-cta">
+        <a class="btn btn-primary" href="#menu">Découvrir le menu</a>
+      </div>
+    </div>
+  </section>
 
-<div class="item" onclick="showImage('images/calzone.jpg')">
-Calzone
-<p class="ingredients">Tomate, jambon blanc, champignons frais, œuf, mozzarella, origan: 12€</p>
-</div>
+  <!-- =================== MENU (onglets) =================== -->
+  <section class="container" id="menu">
+    <div class="tabs">
+      <div class="tablist" id="tablist" role="tablist" aria-label="Catégories du menu"><!-- onglets injectés par JS --></div>
+    </div>
 
-<div class="item" onclick="showImage('images/flammekueche.jpg')">
-Flammekueche
-<p class="ingredients">Crème, lardons, oignons, mozzarella, olives noires, herbes de Provence, origan: 11€</p>
-</div>
+    <div id="menuContent" class="menu-section">
+      <!-- contenu rendu par JS -->
+    </div>
 
-<div class="item" onclick="showImage('images/chorizo.jpg')">
-Chorizo
-<p class="ingredients">Crème, chorizo, poivrons, oignons, mozzarella, olives noires, origan: 12€</p>
-</div>
-</div>
+    <div class="block-cta">
+      <a class="btn" style="background:var(--accent); color:#fff;" href="#contact">Commander</a>
+    </div>
+  </section>
 
-<div class="categorie" onclick="toggleList('vegetariennes')">Les Végétariennes</div>
-<div class="liste" id="vegetariennes">
-<div class="item" onclick="showImage('images/vege.jpg')">
-Végé'
-<p class="ingredients">Tomate, aubergines, courgettes, oignons, poivrons confits, tomates cerise, champignons, mozzarella, olives noires, origan: 12€</p>
-</div>
+  <!-- =================== CONTACT =================== -->
+  <section id="contact" class="container bg-bleed" style="--bg-img: url('images/romaine.jpg'); --bg-opacity:.15;">
+    <div class="contact-wrap">
+      <form class="form-card" onsubmit="event.preventDefault(); alert('Merci ! Votre message a bien été préparé (démo).');">
+        <h2 style="font-family:var(--ff-head); font-weight:900;">Nous contacter</h2>
+        <div class="form-row two">
+          <div><label for="nom">Nom</label><input id="nom" name="nom" required></div>
+          <div><label for="prenom">Prénom</label><input id="prenom" name="prenom"></div>
+        </div>
+        <div class="form-row">
+          <div><label for="tel">Téléphone</label><input id="tel" name="tel" inputmode="tel" placeholder="06 12 34 56 78"></div>
+        </div>
+        <div class="form-row">
+          <div><label for="email">Adresse e‑mail</label><input id="email" name="email" type="email" placeholder="vous@exemple.fr"></div>
+        </div>
+        <div class="form-row">
+          <div><label for="msg">Message</label><textarea id="msg" name="msg" placeholder="Votre demande…"></textarea></div>
+        </div>
+        <div style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn btn-primary" type="submit">Envoyer</button>
+        </div>
+      </form>
+      <aside class="story-card">
+        <p style="font-size:18px; margin-top:0;">Pour une soirée entre amis, un moment en famille ou juste l’envie d’une bonne pizza, Strada Pizza Truck vous régale avec des recettes généreuses, une pâte fraîche pétrie et des ingrédients choisis avec soin.</p>
+        <img src="images/chevremielnoix.jpg" alt="Part de pizza – illustration" style="border-radius: 16px; box-shadow: var(--shadow-1);">
+      </aside>
+    </div>
+  </section>
 
-<div class="item" onclick="showImage('images/grecque.jpg')">
-Grecque
-<p class="ingredients">Tomate, Feta, tomates cerises, aubergines, pesto, mozzarella, olives noires, origan: 12€</p>
-</div>
-</div>
+  <footer class="container">
+    <div class="footer-head">
+      <img src="logo.png" alt="Logo Pizzeria" class="logo" onerror="this.style.display='none'">
+      <div class="slogan">PIZZA STRADA TRUCK</div>
+    </div>
 
-<div class="categorie" onclick="toggleList('coupdecoeur')">Coup de coeur du chef</div>
-<div class="liste" id="coupdecoeur">
-<div class="item" onclick="showImage('images/latuerie.jpg')">
-La Tuerie
-<p class="ingredients">Crème, mozzarella, reblochon, mascarpone, coppa, olives, origan: 14€</p>
-</div>
-</div>
+    <div class="footer-top">
+      <div class="info">
+        <div class="ico">🕒</div>
+        <div class="label" id="footHours">Du Mardi au Vendredi de 18h à 21h00</div>
+      </div>
+      <div class="info">
+        <div class="ico">📱</div>
+        <a class="label" id="footPhone" href="tel:+33656730695">06 56 73 06 95</a>
+      </div>
+      <div class="info">
+        <div class="ico">📍</div>
+        <div class="label" id="footCity">Mardi : Garage 2Souza BERNAC-DEBAT
+        Mercredi : Place de MOMERES
+        Jeudi : Place de HORGUES
+        Vendredi : Salle des fêtes de SALLES-ADOUR</div>
+      </div>
+    </div>
 
-<div class="categorie" onclick="toggleList('viandes')">Les Viandes</div>
-<div class="liste" id="viandes">
-<div class="item" onclick="showImage('images/bolognaise.jpg')">
-Bolognaise
-<p class="ingredients">Bolognaise maison (bœuf haché, tomate, oignons), mozzarella, olives noires, persillade, origan: 13€</p>
-</div>
+    <hr class="foot-sep">
 
-<div class="item" onclick="showImage('images/kebab.jpg')">
-Kebab
-<p class="ingredients">Crème, viande Kebab, mozzarella, olives noires, origan: 12€</p>
+   <div class="footer-bottom">
+  <div class="socials">
+    <a id="fbLink" href="https://www.facebook.com/StradaPizzaTRUCK/?locale=fr_FR" target="_blank" aria-label="Facebook">
+      <img src="images/facebook.png" alt="Facebook" style="height:24px;">
+    </a>
+    <a id="igLink" href="https://www.instagram.com/strada.pizza.truck?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram">
+      <img src="images/IG.jpg" alt="Instagram" style="height:24px;">
+    </a>
+  </div>
+  <div class="links">
+    <a id="mentionsLink" href="mentions-legales.html" style="text-decoration:underline;">Mentions légales</a>
+  </div>
 </div>
+  </footer>
 
-<div class="item" onclick="showImage('images/kebab+.jpg')">
-Kebab +
-<p class="ingredients">Crème, viande Kebab, oignons, poivrons, mozzarella, olives noires, origan: 13€</p>
-</div>
+  <!-- Bouton téléphone flottant (modifiez le numéro dans CONFIG ci-dessous) -->
+  <a class="fab-call" id="fabCall" href="tel:+33656730695" aria-label="Appeler">☎</a>
 
-<div class="item" onclick="showImage('images/basquaise.jpg')">
-Basquaise
-<p class="ingredients">Tomate, poulet, poivrons, oignons, piment d’Espelette, persillade, mozzarella, olives noires, origan: 13€</p>
-</div>
+  <!-- =================== SCRIPTS =================== -->
+  <script>
+    // ===== CONFIG GLOBALE (MODIFIEZ ICI) =====
+    const CONFIG = {
+      business: {
+        hours: "Du Mardi au Vendredi de 18h à 21h00",
+        city: "Mardi : Garage 2Souza BERNAC-DEBAT/ Mercredi : Place de MOMERES/ Jeudi : Place de HORGUES/ Vendredi : Salle des fêtes de SALLES-ADOUR",
+        socials: { facebook: "#", instagram: "#" },
+        legal: { mentions: "#", privacy: "#" }
+      },
+      phone: "+33656730695",   // <— MODIFIEZ le numéro pour le bouton d'appel et le CTA Commander
+      commanderTarget: "#contact", // ancre par défaut du bouton Commander
 
-<div class="item" onclick="showImage('images/chickenbbq.jpg')">
-Chicken BBQ
-<p class="ingredients">Crème, poulet, oignons, poivrons, sauce barbecue, mozzarella, olives noires, origan: 13€</p>
-</div>
+      // === MENU : modifiez/ajoutez vos catégories et pizzas ici ===
+      // Astuce : titres, prix et ingrédients sont intégralement éditables.
+      menu: {
+       "Classiques": [
+    { name: "Margherita", price: 9.00, desc: "Tomate, mozzarella, olives noires, origan" },
+    { name: "Esposito", price: 11.00, desc: "Tomate, mozzarella di Buffala, huile d'olive au basilic, olives noires, origan" },
+    { name: "Romaine", price: 10.00, desc: "Tomate, jambon blanc au torchon, mozzarella, olives noires, origan" },
+    { name: "Reine", price: 11.00, desc: "Tomate, jambon blanc, champignons frais, mozzarella, olives noires, origan" },
+    { name: "Calzone", price: 12.00, desc: "Tomate, jambon blanc, champignons frais, œuf, mozzarella, origan" },
+    { name: "Flammekueche", price: 11.00, desc: "Crème, lardons, oignons, mozzarella, olives noires, herbes de Provence, origan" },
+    { name: "Chorizo", price: 12.00, desc: "Crème, chorizo, poivrons, oignons, mozzarella, olives noires, origan" }
+  ],
+        "Végétariennes": [
+    { name: "Végé’", price: 12.00, desc: "Tomate, aubergines, courgettes, oignons, poivrons confits, tomates cerise, champignons, mozzarella, olives noires, origan" },
+    { name: "Grecque", price: 12.00, desc: "Tomate, Feta, tomates cerises, aubergines, pesto, mozzarella, olives noires, origan" }
+  ],
+        "Coup de cœur du Chef": [
+    { name: "La tuerie", price: 14.00, desc: "Crème, mozzarella, reblochon, mascarpone, coppa, olives, origan" }
+  ],
+        "Viandes": [
+    { name: "Bolognaise", price: 13.00, desc: "Bolognaise maison (bœuf haché, tomate, oignons), mozzarella, olives noires, persillade, origan" },
+    { name: "Kebab", price: 12.00, desc: "Crème, viande Kebab, mozzarella, olives noires, origan" },
+    { name: "Kebab +", price: 13.00, desc: "Crème, viande Kebab, oignons, poivrons, mozzarella, olives noires, origan" },
+    { name: "Basquaise", price: 13.00, desc: "Tomate, poulet, poivrons, oignons, piment d'Espelette, persillade, mozzarella, olives noires, origan" },
+    { name: "Chicken BBQ", price: 13.00, desc: "Crème, poulet, oignons, poivrons, sauce barbecue, mozzarella, olives noires, origan" },
+    { name: "Indienne", price: 13.00, desc: "Crème, poulet mariné aux épices, oignons, mozzarella, olives noires, origan" },
+    { name: "Morea", price: 13.00, desc: "Crème, poulet mariné aux épices, ananas, mozzarella, origan" },
+    { name: "Forestière", price: 13.00, desc: "Crème, poulet, persillade, champignons, mozzarella, olives noires, origan" },
+    { name: "Périgourdine", price: 14.00, desc: "Tomate, magret du Sud-Ouest, gésiers de canards confits, champignons, oignons, persillade, mozzarella, olives noires, origan" }
+  ],
+        "Côté mer": [
+    { name: "Anchoïade", price: 12.00, desc: "Tomate, anchois, câpre, oignons, persillade, mozzarella, olives noires, origan" },
+    { name: "Saumon", price: 14.00, desc: "Crème, saumon fumé, ciboulette, crème balsamique, mozzarella, olives noires, origan" }
+  ],
+        "Fromagères": [
+    { name: "Chèvre miel noix", price: 12.00, desc: "Crème, fromage de chèvre, miel, noix, mozzarella, origan" },
+    { name: "Quattro fromaggi", price: 13.00, desc: "Crème, mozzarella, fromage à tartiflette, chèvre, roquefort, olives noires, origan" },
+    { name: "Camembert", price: 13.00, desc: "Crème, camembert, oignons, lardons, pommes, mozzarella, olives noires, origan" },
+    { name: "Pyrénéenne", price: 14.00, desc: "Tomate, pur brebis AGOUR, jambon Serrano, cerises noires, mozzarella, origan" },
+    { name: "Rustique", price: 13.00, desc: "Crème, fromage de chèvre, lardons, champignons frais, oignons frits, mozzarella, olives noires, origan" },
+    { name: "Savoyarde", price: 14.00, desc: "Crème, pomme de terre, lardons, raclette, reblochon, oignons, mozzarella, olives noires, origan" },
+    { name: "Montagnarde", price: 14.00, desc: "Tomate, pur brebis AGOUR, coppa, jambon Serrano, oignons confits, mozzarella, olives noires, origan" }
+  ],
+          "Saveurs Italiennes": [
+    { name: "La Little ITALY", price: 14.00, desc: "Tomate, mozzarella, roquette, coppa, parmigiano reggiano, jambon Serrano, tomates cerises, filet de crème balsamique et pesto" },
+    { name: "La Burrata", price: 15.00, desc: "Tomate, Burrata, roquette, coppa, billes de mozzarella di Latte, jambon Serrano, tomates cerises, filet de crème balsamique et pesto" }
+  ]
+          "Bambino": [
+    { name: "Menu", price: 8.00, desc: "Petite pizza, 18cm base au choix, mozzarella, jambon blanc + 1 boisson + 1 compote" },
+  ]
+      "Sucré": [
+    { name: "La Big Calzone sucrée", price: 10.00, desc: "Nutella" },
+  ]
+      "Pizza du Mois": [
+    { name: "Septembre", price: 14.00, desc: "bientôt" },
+  ]
+      "Plaque Lunch": [
+    { name: "Plaque à Pizza", desc: "60x40 cm/ Prix : 3x le prix d'une pizza (ex: pour une margherita = 3x9.00 = 27.00€) à réserver au moins 48h à l'avance !" },
+  ]
+      "Boissons": [
+    { name: "Eau", price: 1.00 },
+    { name: "Sodas", price: 2.00, desc: "Coca Cola, Fanta, Oasis, Ice Tea" }
+    { name: "Vins", price: 8.00, desc: "Vin rouge, Rosé, Lambrusco" }
+    { name: "Bières", price: 2.00, desc: "Panaché 2€/ Bière blonde 2.50€/ Desperados 3.50€" }
+  ]
+      "Supplément...": [
+    { name: "Légumes/ Oeuf/ Assaisonnements", price: 1.00 }
+    { name: "Charcuterie/ Fromage", price: 2.00 }
+    { name: "Magret/ Poissons/ Burrata", price: 3.00" }
+  ]
+      }
+    };
 
-<div class="item" onclick="showImage('images/indienne.jpg')">
-Indienne
-<p class="ingredients">Crème, poulet mariné aux épices, oignons, mozzarella, olives noires, origan: 13€</p>
-</div>
+    // ===== UTILITAIRES =====
+    const euro = n => (n).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "€";
 
-<div class="item" onclick="showImage('images/morea.jpg')">
-Morea
-<p class="ingredients">Crème, poulet mariné aux épices, ananas, mozzarella, origan: 13€</p>
-</div>
+    const tablist = document.getElementById('tablist');
+    const menuContent = document.getElementById('menuContent');
 
-<div class="item" onclick="showImage('images/forestiere.jpg')">
-Forestière
-<p class="ingredients">Crème, poulet, persillade, champignons, mozzarella, olives noires, origan: 13€</p>
-</div>
+    function renderTabs() {
+      const cats = Object.keys(CONFIG.menu);
+      tablist.innerHTML = cats.map((c, i) => `
+        <button role="tab" aria-selected="${i===0}" aria-controls="panel-${i}" id="tab-${i}" data-index="${i}">${c}</button>
+      `).join('');
+      tablist.addEventListener('click', (e) => {
+        if(e.target.matches('button[role="tab"]')) {
+          const i = Number(e.target.dataset.index);
+          selectTab(i);
+        }
+      });
+    }
 
-<div class="item" onclick="showImage('images/perigourdine.jpg')">
-Périgourdine
-<p class="ingredients">Tomate, magret du Sud-Ouest, gésiers de canards confits, champignons, oignons, persillade, mozzarella, olives noires, origan: 14€</p>
-</div>
-</div>
+    function renderPanel(index) {
+      const cats = Object.keys(CONFIG.menu);
+      const cat = cats[index];
+      const items = CONFIG.menu[cat];
+      const html = `
+        <div id="panel-${index}" role="tabpanel" aria-labelledby="tab-${index}">
+          <div class="grid">
+            ${items.map(it => `
+              <article class="item">
+                <h4>${it.name} <span class="price">${euro(it.price)}</span></h4>
+                <p>${it.desc || ''}</p>
+                ${it.note ? `<p style="font-size:14px; color:#9aa3ab; margin-top:6px;">${it.note}</p>` : ''}
+              </article>
+            `).join('')}
+          </div>
+        </div>`;
+      menuContent.innerHTML = html;
+    }
 
-<div class="categorie" onclick="toggleList('cotemer')">Côté mer</div>
-<div class="liste" id="cotemer">
-<div class="item" onclick="showImage('images/anchoiade.jpg')">
-Anchoïade
-<p class="ingredients">Tomate, anchois, câpre, oignons, persillade, mozzarella, olives noires, origan: 12€</p>
-</div>
+    function selectTab(index) {
+      for (const b of tablist.querySelectorAll('button')) b.setAttribute('aria-selected', 'false');
+      tablist.querySelector(`[data-index="${index}"]`).setAttribute('aria-selected', 'true');
+      renderPanel(index);
+    }
 
-<div class="item" onclick="showImage('images/saumon.jpg')">
-Saumon
-<p class="ingredients">Crème, saumon fumé, ciboulette, crème balsamique, mozzarella, olives noires, origan: 14€</p>
-</div>
-</div>
+    // ===== Navigation active au scroll =====
+    const navLinks = [...document.querySelectorAll('.desktop-nav a'), ...document.querySelectorAll('#mobileMenu a')];
+    function setActive(hash) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+    }
+    window.addEventListener('hashchange', () => {
+      setActive(location.hash||'#top');
+      mobileMenu.style.display = 'none';
+    });
 
-<div class="categorie" onclick="toggleList('fromageres')">Les Fromagères</div>
-<div class="liste" id="fromageres">
-<div class="item" onclick="showImage('images/chevremielnoix.jpg')">
-Chèvre miel noix
-<p class="ingredients">Crème, fromage de chèvre, miel, noix, mozzarella, origan: 12€</p>
-</div>
+    // ===== Smooth scroll with sticky offset =====
+    function smoothScrollTo(id){
+      const el = document.querySelector(id);
+      if(!el) return;
+      const navH = document.querySelector('.nav-wrap').getBoundingClientRect().height + 20; // marge de respiration
+      const y = el.getBoundingClientRect().top + window.scrollY - navH;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#') return; // garde les faux liens
+        if (id.length > 1 && document.querySelector(id)) {
+          e.preventDefault();
+          history.pushState(null, '', id);
+          smoothScrollTo(id);
+          setActive(id);
+          mobileMenu.style.display = 'none';
+        }
+      });
+    });
 
-<div class="item" onclick="showImage('images/quattrofromaggi.jpg')">
-Quattro formaggi
-<p class="ingredients">Crème, mozzarella, fromage à tartiflette, chèvre, roquefort, olives noires, origan: 13€</p>
-</div>
+    // ===== Burger mobile =====
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+    });
+    mobileMenu.addEventListener('click', () => mobileMenu.style.display = 'none');
+    window.addEventListener('resize', () => { if (window.innerWidth > 900) mobileMenu.style.display = 'none'; });
 
-<div class="item" onclick="showImage('images/camembert.jpg')">
-Camembert
-<p class="ingredients">Crème, camembert, oignons, lardons, pommes, mozzarella, olives noires, origan: 13€</p>
-</div>
+    // ===== Commander + bouton téléphone =====
+const fabCall = document.getElementById('fabCall');
+if (fabCall) fabCall.href = `tel:${CONFIG.phone}`;
 
-<div class="item" onclick="showImage('images/pyreneenne.jpg')">
-Pyrénéenne
-<p class="ingredients">Tomate, pur brebis AGOUR, jambon Serrano, cerises noires, mozzarella, origan: 14€</p>
-</div>
+const commanderTop = document.getElementById('btnCommanderTop');
+if (commanderTop) commanderTop.href = CONFIG.commanderTarget;
 
-<div class="item" onclick="showImage('images/rustique.jpg')">
-Rustique
-<p class="ingredients">Crème, fromage de chèvre, lardons, champignons frais, oignons frits, mozzarella, olives noires, origan: 13€</p>
-</div>
-
-<div class="item" onclick="showImage('images/savoyarde.jpg')">
-Savoyarde
-<p class="ingredients">Crème, pomme de terre, lardons, raclette, reblochon, oignons, mozzarella, olives noires, origan: 14€</p>
-</div>
-
-<div class="item" onclick="showImage('images/montagnarde.jpg')">
-Montagnarde
-<p class="ingredients">Tomate, pur brebis AGOUR, coppa, jambon Serrano, oignons confits, mozzarella, olives noires, origan: 14€</p>
-</div>
-</div>
+const commanderContact = document.getElementById('btnCommanderContact');
+if (commanderContact) commanderContact.href = `tel:${CONFIG.phone}`;
 
 
-<div class="categorie" onclick="toggleList('italiennes')">Saveurs Italiennes</div>
-<div class="liste" id="italiennes">
-<div class="item" onclick="showImage('images/littleitaly.jpg')">
-La Little Italy
-<p class="ingredients">Tomate, mozzarella, roquette, coppa, parmigiano reggiano, jambon Serrano, tomates cerises, filet de crème balsamique et pesto: 14€</p>
-</div>
+    // ===== Footer bindings =====
+    const $ = (id) => document.getElementById(id);
+    const biz = CONFIG.business || {};
+    if ($('footHours')) $('footHours').textContent = biz.hours || '';
+    if ($('footCity')) $('footCity').textContent = biz.city || '';
+    if ($('footPhone')) {
+      const display = (CONFIG.phoneDisplay || '').trim();
+      $('footPhone').textContent = display || (CONFIG.phone || '').replace(/^\+33/, '0');
+      $('footPhone').href = `tel:${CONFIG.phone}`;
+    }
+    if ($('fbLink')) $('fbLink').href = (biz.socials && biz.socials.facebook) || '#';
+    if ($('igLink')) $('igLink').href = (biz.socials && biz.socials.instagram) || '#';
+    if ($('mentionsLink')) $('mentionsLink').href = (biz.legal && biz.legal.mentions) || '#';
+    if ($('privacyLink')) $('privacyLink').href = (biz.legal && biz.legal.privacy) || '#';
 
-<div class="item" onclick="showImage('images/laburrata.jpg')">
-La Burrata
-<p class="ingredients">Tomate, Burrata, roquette, coppa, billes de mozzarella di Latte, jambon serrano, tomates cerises, filet de crème balsamique et pesto: 15€</p>
-</div>
-</div>
-
-<div id="popup" class="popup" onclick="closePopup()">
-<img id="popup-img" src="">
-</div>
-
-<script src="script.js"></script>
+    // ===== Init =====
+    renderTabs();
+    selectTab(0);
+    setActive('#top');
+    const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
