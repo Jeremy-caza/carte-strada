@@ -19,6 +19,7 @@
       --accent-2: #c8504a;      /* corail foncé */
       --border: #7F7C77;        /* filets test*/
       --white: #ffffff;
+      --yellow: #FFC107;        /* jaune camion */
 
       /* === TYPO (modifiez ici) === */
       --ff-head: "Pacifico", cursive;
@@ -108,6 +109,7 @@
       text-shadow: 0.10em 0.10em 0 var(--ink); /* effet ombre portée épaisse */
     }
     .subtitle { font-size: clamp(22px, 3vw, 44px); color: var(--ink); opacity:.9; margin-top: 18px; }
+    .hero .subtitle{ color: var(--yellow); }
 
     .hero-cta { margin-top: 28px; display:flex; gap:14px; flex-wrap: wrap; }
     .btn {
@@ -203,7 +205,7 @@
         <a href="#top" class="active">Accueil</a>
         <a href="#apropos">A propos</a>
         <a href="#menu">Menu</a>
-        <a href="#contact">Contact</a>
+        <a href="#infos">Contact</a>
       </nav>
 
       <!-- Bouton burger pour mobile -->
@@ -213,7 +215,7 @@
         <a href="#top">Accueil</a>
         <a href="#apropos">A propos</a>
         <a href="#menu">Menu</a>
-        <a href="#contact">Contact</a>
+        <a href="#infos">Contact</a>
       </div>
 
       <!-- Bouton UberEats supprimé selon votre demande -->
@@ -227,7 +229,7 @@
     <p class="subtitle">Le camion jaune !</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#menu">Voir le menu</a>
-      <a class="btn btn-ghost" id="btnCommanderTop" href="#contact">Commander</a>
+      <a class="btn btn-ghost" id="btnCommanderTop" href="#infos">Commander</a>
     </div>
   </section>
 
@@ -253,40 +255,24 @@
     </div>
 
     <div class="block-cta">
-      <a class="btn" style="background:var(--accent); color:#fff;" href="#contact">Commander</a>
+      <a class="btn" style="background:var(--accent); color:#fff;" href="#infos">Commander</a>
     </div>
   </section>
 
   <!-- =================== CONTACT =================== -->
-  <section id="contact" class="container bg-bleed" style="--bg-img: url('images/romaine.jpg'); --bg-opacity:.15;">
-    <div class="contact-wrap">
-      <form class="form-card" onsubmit="event.preventDefault(); alert('Merci ! Votre message a bien été préparé (démo).');">
-        <h2 style="font-family:var(--ff-head); font-weight:900;">Nous contacter</h2>
-        <div class="form-row two">
-          <div><label for="nom">Nom</label><input id="nom" name="nom" required></div>
-          <div><label for="prenom">Prénom</label><input id="prenom" name="prenom"></div>
-        </div>
-        <div class="form-row">
-          <div><label for="tel">Téléphone</label><input id="tel" name="tel" inputmode="tel" placeholder="06 12 34 56 78"></div>
-        </div>
-        <div class="form-row">
-          <div><label for="email">Adresse e‑mail</label><input id="email" name="email" type="email" placeholder="vous@exemple.fr"></div>
-        </div>
-        <div class="form-row">
-          <div><label for="msg">Message</label><textarea id="msg" name="msg" placeholder="Votre demande…"></textarea></div>
-        </div>
-        <div style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
-          <button class="btn btn-primary" type="submit">Envoyer</button>
-        </div>
-      </form>
-      <aside class="story-card">
-        <p style="font-size:18px; margin-top:0;">Pour une soirée entre amis, un moment en famille ou juste l’envie d’une bonne pizza, Strada Pizza Truck vous régale avec des recettes généreuses, une pâte fraîche pétrie et des ingrédients choisis avec soin.</p>
-        <img src="images/chevremielnoix.jpg" alt="Part de pizza – illustration" style="border-radius: 16px; box-shadow: var(--shadow-1);">
-      </aside>
-    </div>
-  </section>
+ <section id="infos-texte" class="container bg-bleed" style="--bg-img:url('images/romaine.jpg'); --bg-opacity:.15;">
+  <div class="story-card" style="max-width:880px; margin:0 auto;">
+    <p style="font-size:18px; margin:0 0 16px;">
+      Pour une soirée entre amis, un moment en famille ou juste l’envie d’une bonne pizza,
+      Strada Pizza Truck vous régale avec des recettes généreuses, une pâte fraîche pétrie
+      et des ingrédients choisis avec soin.
+    </p>
+    <img src="images/chevremielnoix.jpg" alt="Pizza"
+         style="border-radius:16px; box-shadow:var(--shadow-1);">
+  </div>
+</section>
 
-  <footer class="container">
+  <footer class="container" id="infos">
     <div class="footer-head">
       <img src="logo.png" alt="Logo Pizzeria" class="logo" onerror="this.style.display='none'">
       <div class="slogan">PIZZA STRADA TRUCK</div>
@@ -303,9 +289,9 @@
       </div>
       <div class="info">
         <div class="ico">📍</div>
-        <div class="label" id="footCity">Mardi : Garage 2Souza BERNAC-DEBAT
-        Mercredi : Place de MOMERES
-        Jeudi : Place de HORGUES
+        <div class="label" id="footCity">Mardi : Garage 2Souza BERNAC-DEBAT/
+        Mercredi : Place de MOMERES/
+        Jeudi : Place de HORGUES/
         Vendredi : Salle des fêtes de SALLES-ADOUR</div>
       </div>
     </div>
@@ -341,12 +327,12 @@
         legal: { mentions: "#", privacy: "#" }
       },
       phone: "+33656730695",   // <— MODIFIEZ le numéro pour le bouton d'appel et le CTA Commander
-      commanderTarget: "#contact", // ancre par défaut du bouton Commander
+      commanderTarget: "#infos", // ancre par défaut du bouton Commander
 
       // === MENU : modifiez/ajoutez vos catégories et pizzas ici ===
       // Astuce : titres, prix et ingrédients sont intégralement éditables.
       menu: {
-       "Classiques": [
+  "Classiques": [
     { name: "Margherita", price: 9.00, desc: "Tomate, mozzarella, olives noires, origan" },
     { name: "Esposito", price: 11.00, desc: "Tomate, mozzarella di Buffala, huile d'olive au basilic, olives noires, origan" },
     { name: "Romaine", price: 10.00, desc: "Tomate, jambon blanc au torchon, mozzarella, olives noires, origan" },
@@ -355,14 +341,17 @@
     { name: "Flammekueche", price: 11.00, desc: "Crème, lardons, oignons, mozzarella, olives noires, herbes de Provence, origan" },
     { name: "Chorizo", price: 12.00, desc: "Crème, chorizo, poivrons, oignons, mozzarella, olives noires, origan" }
   ],
-        "Végétariennes": [
+
+  "Végétariennes": [
     { name: "Végé’", price: 12.00, desc: "Tomate, aubergines, courgettes, oignons, poivrons confits, tomates cerise, champignons, mozzarella, olives noires, origan" },
     { name: "Grecque", price: 12.00, desc: "Tomate, Feta, tomates cerises, aubergines, pesto, mozzarella, olives noires, origan" }
   ],
-        "Coup de cœur du Chef": [
+
+  "Coup de cœur du Chef": [
     { name: "La tuerie", price: 14.00, desc: "Crème, mozzarella, reblochon, mascarpone, coppa, olives, origan" }
   ],
-        "Viandes": [
+
+  "Viandes": [
     { name: "Bolognaise", price: 13.00, desc: "Bolognaise maison (bœuf haché, tomate, oignons), mozzarella, olives noires, persillade, origan" },
     { name: "Kebab", price: 12.00, desc: "Crème, viande Kebab, mozzarella, olives noires, origan" },
     { name: "Kebab +", price: 13.00, desc: "Crème, viande Kebab, oignons, poivrons, mozzarella, olives noires, origan" },
@@ -373,11 +362,13 @@
     { name: "Forestière", price: 13.00, desc: "Crème, poulet, persillade, champignons, mozzarella, olives noires, origan" },
     { name: "Périgourdine", price: 14.00, desc: "Tomate, magret du Sud-Ouest, gésiers de canards confits, champignons, oignons, persillade, mozzarella, olives noires, origan" }
   ],
-        "Côté mer": [
-    { name: "Anchoïade", price: 12.00, desc: "Tomate, anchois, câpre, oignons, persillade, mozzarella, olives noires, origan" },
+
+  "Côté mer": [
+    { name: "Anchoïade", price: 12.00, desc: "Tomate, anchois, câpres, oignons, persillade, mozzarella, olives noires, origan" },
     { name: "Saumon", price: 14.00, desc: "Crème, saumon fumé, ciboulette, crème balsamique, mozzarella, olives noires, origan" }
   ],
-        "Fromagères": [
+
+  "Fromagères": [
     { name: "Chèvre miel noix", price: 12.00, desc: "Crème, fromage de chèvre, miel, noix, mozzarella, origan" },
     { name: "Quattro fromaggi", price: 13.00, desc: "Crème, mozzarella, fromage à tartiflette, chèvre, roquefort, olives noires, origan" },
     { name: "Camembert", price: 13.00, desc: "Crème, camembert, oignons, lardons, pommes, mozzarella, olives noires, origan" },
@@ -386,38 +377,47 @@
     { name: "Savoyarde", price: 14.00, desc: "Crème, pomme de terre, lardons, raclette, reblochon, oignons, mozzarella, olives noires, origan" },
     { name: "Montagnarde", price: 14.00, desc: "Tomate, pur brebis AGOUR, coppa, jambon Serrano, oignons confits, mozzarella, olives noires, origan" }
   ],
-          "Saveurs Italiennes": [
+
+  "Saveurs Italiennes": [
     { name: "La Little ITALY", price: 14.00, desc: "Tomate, mozzarella, roquette, coppa, parmigiano reggiano, jambon Serrano, tomates cerises, filet de crème balsamique et pesto" },
     { name: "La Burrata", price: 15.00, desc: "Tomate, Burrata, roquette, coppa, billes de mozzarella di Latte, jambon Serrano, tomates cerises, filet de crème balsamique et pesto" }
+  ],
+
+  "Bambino": [
+    { name: "Menu", price: 8.00, desc: "Petite pizza 18 cm (base au choix) + mozzarella + jambon blanc + 1 boisson + 1 compote" }
+  ],
+
+  "Sucré": [
+    { name: "La Big Calzone sucrée", price: 10.00, desc: "Nutella" }
+  ],
+
+  "Pizza du Mois": [
+    { name: "Septembre", price: 14.00, desc: "Bientôt" }
+  ],
+
+  "Plaque Lunch": [
+    { name: "Plaque à Pizza", price: null, desc: "60×40 cm — Prix : 3× le prix d’une pizza (ex. Margherita 3×9.00 = 27.00 €). Réservation 48 h à l’avance." }
+  ],
+
+  "Boissons": [
+    { name: "Eau", price: 1.00, desc: "" },
+    { name: "Sodas", price: 2.00, desc: "Coca‑Cola, Fanta, Oasis, Ice Tea" },
+    { name: "Vins", price: 8.00, desc: "Rouge, Rosé, Lambrusco" },
+    { name: "Bières", price: 2.00, desc: "Panaché 2 € / Blonde 2.50 € / Desperados 3.50 €" }
+  ],
+
+  "Suppléments": [
+    { name: "Légumes / Œuf / Assaisonnements", price: 1.00, desc: "" },
+    { name: "Charcuterie / Fromage", price: 2.00, desc: "" },
+    { name: "Magret / Poissons / Burrata", price: 3.00, desc: "" }
   ]
-          "Bambino": [
-    { name: "Menu", price: 8.00, desc: "Petite pizza, 18cm base au choix, mozzarella, jambon blanc + 1 boisson + 1 compote" },
-  ]
-      "Sucré": [
-    { name: "La Big Calzone sucrée", price: 10.00, desc: "Nutella" },
-  ]
-      "Pizza du Mois": [
-    { name: "Septembre", price: 14.00, desc: "bientôt" },
-  ]
-      "Plaque Lunch": [
-    { name: "Plaque à Pizza", desc: "60x40 cm/ Prix : 3x le prix d'une pizza (ex: pour une margherita = 3x9.00 = 27.00€) à réserver au moins 48h à l'avance !" },
-  ]
-      "Boissons": [
-    { name: "Eau", price: 1.00 },
-    { name: "Sodas", price: 2.00, desc: "Coca Cola, Fanta, Oasis, Ice Tea" }
-    { name: "Vins", price: 8.00, desc: "Vin rouge, Rosé, Lambrusco" }
-    { name: "Bières", price: 2.00, desc: "Panaché 2€/ Bière blonde 2.50€/ Desperados 3.50€" }
-  ]
-      "Supplément...": [
-    { name: "Légumes/ Oeuf/ Assaisonnements", price: 1.00 }
-    { name: "Charcuterie/ Fromage", price: 2.00 }
-    { name: "Magret/ Poissons/ Burrata", price: 3.00" }
-  ]
-      }
+}
     };
 
     // ===== UTILITAIRES =====
-    const euro = n => (n).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "€";
+    const euro = n => (typeof n === "number")
+  ? n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "€"
+  : "";
 
     const tablist = document.getElementById('tablist');
     const menuContent = document.getElementById('menuContent');
@@ -444,7 +444,7 @@
           <div class="grid">
             ${items.map(it => `
               <article class="item">
-                <h4>${it.name} <span class="price">${euro(it.price)}</span></h4>
+                <h4>${it.name} ${(typeof it.price === 'number') ? `<span class="price">${euro(it.price)}</span>` : ''}</h4>
                 <p>${it.desc || ''}</p>
                 ${it.note ? `<p style="font-size:14px; color:#9aa3ab; margin-top:6px;">${it.note}</p>` : ''}
               </article>
@@ -535,3 +535,4 @@ if (commanderContact) commanderContact.href = `tel:${CONFIG.phone}`;
   </script>
 </body>
 </html>
+
